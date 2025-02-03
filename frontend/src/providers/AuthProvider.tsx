@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		// clean up
 		return () => disconnectSocket();
 	}, [getToken, userId, checkAdminStatus, initSocket, disconnectSocket]);
-
+	// Here, lucide-react is used for icons
 	if (loading)
 		return (
 			<div className='h-screen w-full flex items-center justify-center'>
