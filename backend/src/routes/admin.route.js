@@ -3,7 +3,7 @@ import { checkAdmin, createAlbum, createSong, deleteAlbum, deleteSong } from "..
 import { protectRoute, requireAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
-
+// If the user is authenticated and an admin 
 router.use(protectRoute, requireAdmin);
 
 router.get("/check", checkAdmin);
