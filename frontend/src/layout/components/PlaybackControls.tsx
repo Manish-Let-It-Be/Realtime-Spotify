@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { usePlayerStore } from "@/stores/usePlayerStore";
-import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
+import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1, VolumeOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const formatTime = (seconds: number) => {
@@ -16,6 +16,7 @@ export const PlaybackControls = () => {
 	const [volume, setVolume] = useState(75);
 	const [currentTime, setCurrentTime] = useState(0);
 	const [duration, setDuration] = useState(0);
+	const [isMuted, setIsMuted] = useState(false); // **Added state for mute/unmute**
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 
 	useEffect(() => {
@@ -49,6 +50,15 @@ export const PlaybackControls = () => {
 		}
 	};
 
+	// **Toggle mute function**
+	const toggleMute = () => {
+		setIsMuted(prev => !prev);
+		if (audioRef.current) {
+			audioRef.current.muted = !isMuted; // Mute or unmute the audio
+		}
+	};
+	
+
 	return (
 		<footer className='h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4'>
 			<div className='flex justify-between items-center h-full max-w-[1800px] mx-auto'>
@@ -80,6 +90,7 @@ export const PlaybackControls = () => {
 							size='icon'
 							variant='ghost'
 							className='hidden sm:inline-flex hover:text-white text-zinc-400'
+							title='Shuffle'
 						>
 							<Shuffle className='h-4 w-4' />
 						</Button>
@@ -90,6 +101,7 @@ export const PlaybackControls = () => {
 							className='hover:text-white text-zinc-400'
 							onClick={playPrevious}
 							disabled={!currentSong}
+							title='Previous'
 						>
 							<SkipBack className='h-4 w-4' />
 						</Button>
@@ -99,6 +111,7 @@ export const PlaybackControls = () => {
 							className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
 							onClick={togglePlay}
 							disabled={!currentSong}
+							title={isPlaying ? "Pause" : "Play"}
 						>
 							{isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
 						</Button>
@@ -108,6 +121,7 @@ export const PlaybackControls = () => {
 							className='hover:text-white text-zinc-400'
 							onClick={playNext}
 							disabled={!currentSong}
+							title='Next'
 						>
 							<SkipForward className='h-4 w-4' />
 						</Button>
@@ -115,6 +129,7 @@ export const PlaybackControls = () => {
 							size='icon'
 							variant='ghost'
 							className='hidden sm:inline-flex hover:text-white text-zinc-400'
+							title='Repeat'
 						>
 							<Repeat className='h-4 w-4' />
 						</Button>
@@ -134,20 +149,30 @@ export const PlaybackControls = () => {
 				</div>
 				{/* volume controls */}
 				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' title="Mic">
 						<Mic2 className='h-4 w-4' />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' title="ListMusic">
 						<ListMusic className='h-4 w-4' />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' title="Laptop">
 						<Laptop2 className='h-4 w-4' />
 					</Button>
 
 					<div className='flex items-center gap-2'>
-						<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
-							<Volume1 className='h-4 w-4' />
-						</Button>
+					<Button
+								size='icon'
+								variant='ghost'
+								className='hover:text-white text-zinc-400'
+								onClick={toggleMute} // **Added onClick handler for mute/unmute**
+								title={isMuted ? "Unmute" : "Mute"} // **Changed title based on mute state**
+							>
+								{isMuted ? ( // **Changed icon based on mute state**
+									<VolumeOff className='h-4 w-4' />
+								) : (
+									<Volume1 className='h-4 w-4' />
+								)}
+					</Button>
 
 						<Slider
 							value={[volume]}
