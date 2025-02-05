@@ -3,8 +3,11 @@
 <!--   
 ![Demo App](/frontend/public/screenshot-for-readme.png)
 -->
-
-![Demo App](/frontend/public/Spotify_SS.jpg)
+<p align="center">
+<a  href="https://realtime-spotify-sjqh.onrender.com/">
+    <img src="/frontend/public/Spotify_SS.jpg" alt="UI gif" ">
+</a>
+</p>
 
 Live Demo: [Real-Time Spotify Clone](https://realtime-spotify-sjqh.onrender.com/)  
 
