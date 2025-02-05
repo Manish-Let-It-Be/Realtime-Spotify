@@ -53,7 +53,7 @@ export const PlaybackControls = () => {
 		<footer className='h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4'>
 			<div className='flex justify-between items-center h-full max-w-[1800px] mx-auto'>
 				{/* currently playing song */}
-				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%]'>
+				<div className='sm:flex items-center gap-4 min-w-[180px] w-[30%]'>
 					{currentSong && (
 						<>
 							<img
@@ -62,10 +62,10 @@ export const PlaybackControls = () => {
 								className='w-14 h-14 object-cover rounded-md'
 							/>
 							<div className='flex-1 min-w-0'>
-								<div className='font-medium truncate hover:underline cursor-pointer'>
+								<div className='hidden sm:flex font-medium truncate hover:underline cursor-pointer'>
 									{currentSong.title}
 								</div>
-								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer'>
+								<div className='hidden sm:flex text-sm text-zinc-400 truncate hover:underline cursor-pointer'>
 									{currentSong.artist}
 								</div>
 							</div>
@@ -120,8 +120,8 @@ export const PlaybackControls = () => {
 						</Button>
 					</div>
 
-					<div className='hidden sm:flex items-center gap-2 w-full'>
-						<div className='text-xs text-zinc-400'>{formatTime(currentTime)}</div>
+					<div className='sm:flex items-center gap-2 w-full'>
+						<div className='hidden sm:flex text-xs text-zinc-400'>{formatTime(currentTime)}</div>
 						<Slider
 							value={[currentTime]}
 							max={duration || 100}
@@ -129,7 +129,7 @@ export const PlaybackControls = () => {
 							className='w-full hover:cursor-grab active:cursor-grabbing'
 							onValueChange={handleSeek}
 						/>
-						<div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
+						<div className='hidden sm:flex text-xs text-zinc-400'>{formatTime(duration)}</div>
 					</div>
 				</div>
 				{/* volume controls */}
